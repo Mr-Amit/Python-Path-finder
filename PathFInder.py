@@ -1,12 +1,13 @@
 import sys 
 from io import StringIO
 sys.stdin = StringIO('''5 7
-1 0 1 0 1 0 1
+1 0 1 1 1 1 1
 1 0 1 0 0 0 9
 1 1 1 0 1 0 1
-0 0 1 1 0 1 1
-0 0 0 1 1 1 0''')
+0 0 1 0 0 0 1
+0 0 1 1 1 1 0''')
 input = sys.stdin.readline
+
 
 def maze(matrix, i, j, n, m):
     global explored
@@ -18,18 +19,26 @@ def maze(matrix, i, j, n, m):
         if matrix[i][j + 1] != 0 and (i, j + 1) not in explored:
             if maze(matrix, i, j + 1, n, m):
                 return True
+            else:
+                explored.remove((i, j + 1))
     if j - 1 >= 0:
         if matrix[i][j - 1] != 0 and (i, j - 1) not in explored:
             if maze(matrix, i, j - 1, n, m):
                 return True
+            else:
+                explored.remove((i, j - 1))
     if i + 1 < n:
         if matrix[i + 1][j] != 0 and (i + 1, j) not in explored:
             if maze(matrix, i + 1, j, n, m):
                 return True
+            else:
+                explored.remove((i + 1, j))
     if i - 1>= 0:
         if matrix[i - 1][j] != 0 and (i - 1, j) not in explored:
             if maze(matrix, i - 1, j, n, m):
                 return True
+            else:
+                explored.remove((i - 1, j))
     return False
 
 explored = []
